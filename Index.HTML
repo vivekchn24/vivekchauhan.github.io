@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivek Chauhan | Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #60a5fa; /* Light blue */
+      --secondary-color: #93c5fd; /* Lighter blue */
+      --dark-bg: #0a0f2c; /* Dark blue */
+      --darker-bg: #121b3f; /* Slightly lighter dark blue */
+      --text-color: #dbeafe; /* Light text */
+      --card-bg: rgba(255, 255, 255, 0.08); /* Semi-transparent white */
+      --border-color: #334155; /* Grayish blue */
+      --nav-bg: rgba(5, 10, 26, 0.95); /* Darker semi-transparent for nav */
+      --footer-bg: #0f172a; /* Even darker blue for footer */
+      --hover-color: #3b82f6; /* Blue for hover states */
+
+      /* Sequential Card Hover Colors */
+      --card-hover-1: #facc15; /* Yellow */
+      --card-hover-2: #22c55e; /* Green */
+      --card-hover-3: #a855f7; /* Purple */
+      --card-hover-4: #fb923c; /* Orange */
+      --card-hover-5: #06b6d4; /* Cyan */
+      --card-hover-6: #ef4444; /* Red */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(to right, var(--dark-bg), var(--darker-bg));
+      color: var(--text-color);
+      overflow-x: hidden; /* Prevent horizontal scroll from animations */
+    }
+
+    /* Particle Background Animation */
+    .particle-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2; /* Behind everything */
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(96, 165, 250, 0.3); /* Primary color with transparency */
+      border-radius: 50%;
+      animation: floatParticles 20s infinite ease-in-out; /* Adjusted duration */
+      opacity: 0; /* Start hidden */
+      filter: blur(1px); /* Slightly blurred particles */
+    }
+
+    @keyframes floatParticles {
+      0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+      20% { opacity: 0.7; } /* Slightly more opaque */
+      100% { transform: translateY(-100vh) translateX(50vw) scale(1.5); opacity: 0; }
+    }
+
+    /* Generate multiple particles with varied delays and sizes */
+    .particle:nth-child(1) { width: 10px; height: 10px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 15px; height: 15px; left: 20%; animation-delay: 2s; animation-duration: 18s; }
+    .particle:nth-child(3) { width: 8px; height: 8px; left: 30%; animation-delay: 4s; animation-duration: 12s; }
+    .particle:nth-child(4) { width: 12px; height: 12px; left: 40%; animation-delay: 6s; animation-duration: 16s; }
+    .particle:nth-child(5) { width: 18px; height: 18px; left: 50%; animation-delay: 8s; animation-duration: 20s; }
+    .particle:nth-child(6) { width: 7px; height: 7px; left: 60%; animation-delay: 10s; animation-duration: 14s; }
+    .particle:nth-child(7) { width: 14px; height: 14px; left: 70%; animation-delay: 12s; animation-duration: 17s; }
+    .particle:nth-child(8) { width: 9px; height: 9px; left: 80%; animation-delay: 14s; animation-duration: 13s; }
+    .particle:nth-child(9) { width: 16px; height: 16px; left: 90%; animation-delay: 16s; animation-duration: 19s; }
+    .particle:nth-child(10) { width: 11px; height: 11px; left: 5%; animation-delay: 1s; animation-duration: 15s; }
+
+
+    section {
+      padding: 6rem 5vw;
+      max-width: 1200px;
+      margin: auto;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+      /* Initial state for scroll animation */
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section:nth-child(even) {
+      background: linear-gradient(to right, var(--darker-bg), var(--dark-bg));
+    }
+
+    nav {
+      display: flex;
+      justify-content: center; /* Centered nav items */
+      align-items: center;
+      padding: 1rem 5vw;
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    /* Remove underline on hover for all links */
+    nav ul li a:hover {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+      text-decoration: none; /* Explicitly remove underline on hover */
+    }
+
+    /* ONLY active link gets the underline */
+    nav ul li a.active {
+      color: var(--primary-color);
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(147, 197, 253, 0.6);
+    }
+
+    nav ul li a.active::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-color);
+        border-radius: 1px;
+        transform: scaleX(1);
+        transition: transform 0.3s ease-out;
+    }
+
+    /* Ensure non-active links do NOT have an underline (and explicitly remove any potential default hover underline) */
+    nav ul li a:not(.active)::after {
+        content: none;
+    }
+
+
+    #hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      justify-content: center;
+      padding: 4rem 5vw;
+      position: relative;
+      z-index: 1; /* Ensure hero content is above particles */
+    }
+
+    #hero img {
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 6px solid var(--primary-color);
+      box-shadow: 0 0 40px var(--primary-color), 0 0 80px rgba(96, 165, 250, 0.4);
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 40px var(--primary-color), 0 0 80px rgba(96, 165, 250, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 60px var(--primary-color), 0 0 100px rgba(96, 165, 250, 0.6); }
+    }
+
+    .intro h1 {
+      font-size: 3.5rem;
+      margin-top: 2rem;
+      color: var(--secondary-color);
+      text-shadow: 0 0 10px rgba(147, 197, 253, 0.6); /* Slightly stronger glow */
+      animation: slideInFromLeft 1s ease-out;
+    }
+
+    .typing-text {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-top: 1rem;
+      color: var(--primary-color);
+      min-height: 2.5rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .intro p {
+      animation: slideInFromRight 1s ease-out;
+      animation-delay: 0.3s;
+      animation-fill-mode: backwards;
+    }
+
+    @keyframes slideInFromLeft {
+      0% { transform: translateX(-100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInFromRight {
+      0% { transform: translateX(100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    h1, h2, h3 {
+      color: var(--secondary-color);
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(147, 197, 253, 0.5); /* Stronger glow for headings */
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-color);
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -15px;
+      border-radius: 2px;
+    }
+
+    p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--primary-color); /* Default link color, overridden below where needed */
+      text-decoration: none; /* Default: no underline */
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Remove underline on hover for all 'a' tags, unless specifically overridden by 'active' class */
+    a:hover {
+      color: var(--hover-color);
+      text-decoration: none; /* Ensure no underline on hover */
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Default for 3 cards or wider */
+      margin-top: 2rem;
+    }
+
+    /* Specific grid for SKILLS section with 5 cards in a line */
+    #skills .grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted for 5 cards */
+    }
+
+    /* Specific grid for PROJECTS and CERTIFICATIONS sections with 3 cards in a line */
+    #projects .grid,
+    #certifications .grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Explicitly set for 3 cards */
+    }
+
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Sequential Card Hover Colors - Only border and shadow */
+    .card:nth-of-type(1):hover { border-color: var(--card-hover-1); box-shadow: 0 10px 30px rgba(250, 204, 21, 0.5); }
+    .card:nth-of-type(2):hover { border-color: var(--card-hover-2); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.5); }
+    .card:nth-of-type(3):hover { border-color: var(--card-hover-3); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5); }
+    .card:nth-of-type(4):hover { border-color: var(--card-hover-4); box-shadow: 0 10px 30px rgba(251, 146, 60, 0.5); }
+    .card:nth-of-type(5):hover { border-color: var(--card-hover-5); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+    .card:nth-of-type(6):hover { border-color: var(--card-hover-6); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5); }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    /* All Card H3 hover effect (includes Projects, Certifications, Experience, Achievements, Profiles, Contact) */
+    .card h3 {
+        transition: color 0.3s ease;
+    }
+
+    /* Always make h3 yellow on hover for any card */
+    .card:hover h3 {
+        color: var(--card-hover-1); /* Yellow color */
+    }
+
+
+    /* Skill card specific styles */
+    #skills .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Space out content vertically */
+      align-items: center; /* Center horizontally */
+    }
+
+    #skills .card h3 {
+        order: 1; /* Skill name comes first */
+        margin-bottom: 0.5rem; /* Space between title and level */
+        margin-top: 0; /* Remove default h3 top margin for skills */
+    }
+
+    #skills .card .skill-level-label {
+      order: 2; /* Skill level text comes after skill name */
+      display: block; /* Make it take full width */
+      margin-bottom: 1rem; /* Space between level and progress bar */
+      font-size: 1rem; /* Slightly larger for text */
+      color: var(--text-color); /* Default text color */
+      font-weight: 500;
+      text-shadow: none; /* Remove any text shadow */
+      text-align: center;
+      transition: color 0.3s ease; /* Add transition for color change */
+    }
+
+    /* Skill card hover: skill title and level become yellow */
+    #skills .card:hover h3,
+    #skills .card:hover .skill-level-label {
+        color: var(--card-hover-1); /* Yellow color on hover */
+    }
+
+
+    #skills .card .progress-bar {
+      order: 3; /* Progress bar comes after level */
+      width: 100%; /* Make progress bar full width of card content area */
+      margin-top: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #skills .card .progress {
+      height: 100%;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      width: 0%; /* Initial state for animation */
+      transition: width 1.5s ease-out; /* Slower fill animation */
+      position: relative;
+      overflow: hidden;
+    }
+
+    #skills .card .progress::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 30px;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.3));
+        animation: progressShine 2s infinite linear;
+        opacity: 0; /* Initially hidden */
+    }
+
+    #skills.is-visible .card .progress::after {
+        opacity: 1; /* Show shine when visible */
+    }
+
+    @keyframes progressShine {
+        0% { transform: translateX(-100%); opacity: 0; }
+        50% { transform: translateX(100%); opacity: 1; }
+        100% { transform: translateX(200%); opacity: 0; }
+    }
+
+
+    .icon-link {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      display: inline-block;
+      color: var(--primary-color); /* Default primary color for icons */
+      transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+    }
+
+    .icon-link i {
+      margin-right: 5px;
+    }
+
+    .icon-link:hover {
+      color: var(--hover-color);
+      transform: translateY(-3px) scale(1.1);
+      text-decoration: none; /* Ensure no underline on hover for icon links */
+    }
+
+    /* Counter Section Styles */
+    #achievements .grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Smaller cards */
+      justify-content: center; /* Center items in grid */
+      text-align: center;
+    }
+
+    #achievements .card {
+      padding: 1.5rem;
+      min-height: 150px; /* Ensure consistent height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #achievements .card .counter-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+    }
+
+    #achievements .card .counter-label {
+      font-size: 1.1rem;
+      color: var(--secondary-color);
+      line-height: 1.4;
+    }
+
+    /* Profiles and Contact Card specific text and link colors */
+    #profiles .card p,
+    #contact .card p {
+        color: var(--text-color); /* Ensure paragraph text is text-color */
+    }
+
+    #profiles .card a,
+    #contact .card a {
+        color: var(--text-color); /* Ensure general links are text-color */
+        text-decoration: none; /* No underline for general links in these sections */
+        transition: color 0.3s ease, transform 0.3s ease; /* Add transition */
+    }
+
+    #profiles .card a:hover,
+    #contact .card a:hover {
+        color: var(--card-hover-1); /* Yellow hover color */
+        text-decoration: none; /* Still no underline on hover */
+    }
+
+    /* Icon links in Profiles and Contact */
+    #profiles .card a.icon-link,
+    #contact .card a.icon-link {
+        color: var(--text-color); /* Default to white for icon links in these sections */
+    }
+
+    #profiles .card a.icon-link:hover,
+    #contact .card a.icon-link:hover {
+        color: var(--card-hover-1); /* Yellow hover color for icon links */
+        text-decoration: none; /* Still no underline on hover for icon links */
+    }
+
+
+    footer {
+      text-align: center;
+      background: var(--footer-bg);
+      padding: 2.5rem;
+      font-size: 1rem;
+      color: #94a3b8;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 1200px) {
+        /* Skills: Aim for 4-5 cards */
+        #skills .grid {
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+        /* Projects & Certifications: Aim for 2-3 cards */
+        #projects .grid,
+        #certifications .grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+
+    @media (max-width: 992px) {
+        /* Skills: Aim for 3-4 cards */
+        #skills .grid {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+        /* Projects & Certifications: Aim for 2 cards */
+        #projects .grid,
+        #certifications .grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        padding: 1.5rem 5vw;
+      }
+      nav ul {
+        margin-top: 1rem;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      #hero img {
+        width: 250px;
+        height: 250px;
+      }
+      .intro h1 {
+        font-size: 2.8rem;
+      }
+      .typing-text {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+      #achievements .grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+
+      /* All sections: Stack cards on very small screens */
+      #skills .grid,
+      #projects .grid,
+      #certifications .grid,
+      #profiles .grid { /* Also include profiles for smaller screens */
+          grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav ul {
+        gap: 1rem;
+      }
+      #hero img {
+        width: 200px;
+        height: 200px;
+      }
+      .intro h1 {
+        font-size: 2.2rem;
+      }
+      .typing-text {
+        font-size: 1.5rem;
+        min-height: 2rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      section {
+        padding: 4rem 5vw;
+      }
+      /* Ensure all grids stack on very small screens */
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+<div class="particle-bg">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#profiles">Profiles</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <img src="Profile_Image.jpg" alt="Vivek Chauhan Profile Picture">
+    <div class="intro">
+      <h1>Hi, I'm Vivek Chauhan</h1>
+      <div class="typing-text" id="typing"></div>
+      <p>I'm a dedicated "Data Analyst" passionate about transforming raw data into actionable business insights. My expertise lies in leveraging tools like "Advanced-Excel, SQL, Python, and Power BI" to drive data-driven decision-making.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I’m Vivek Chauhan, a passionate and detail-oriented aspiring Data Analyst with a strong foundation in tools like Microsoft-Excel, Power BI, Python, R, and SQL. I’ve completed hands-on projects and training in Advanced Data Analysis From Future Vision Computer Institute With A+ Grade,and I enjoy working with data to extract meaningful insights and solve real-world problems.</p>
+    <p>I come from a BE.Computer Engineering From C.K.Pithawala College Of Engineering & Technology With 8.16 CGPA background and have also explored technologies like Python,HTML, CSS, JavaScript, MongoDB,Node.js,API Calling,Wordpress Web-Development,Figma,and MySQL during my academic and internship journey. Currently,I’m focused on enhancing my skills in data visualization, statistical analysis, and business intelligence to make data-driven decisions easier and more impactful.</p>
+    <p>I believe in continuous learning, discipline, and time management — qualities that help me stay on track in this fast-evolving field.</p>
+    <p>In my free time, I actively self-learn technologies like Machine Learning, OpenCV, Docker, and NLP, while also practicing coding and completing virtual job simulations to enhance my skills.</P>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Intern - Navkar Enterprise</h3>
+        <p><strong>Jan2024 To Apr2024</strong></p>
+        <p>Completed a 3-month GTU internship focused on WordPress development, mastering customization, plugin integration, and performance tuning. Contributed to a live project, resolved issues, and met deadlines.</p>
+        <p>Completed a 3-month GTU internship focused on WordPress development, mastering customization, plugin integration, and performance tuning. Contributed to a live project, resolved issues, and met deadlines.</p>
+      </div>
+      <div class="card">
+        <h3>Intern - LeafDrive Academy</h3>
+        <p><strong>July2023 To Aug2023</strong></p>
+        <p>Completed a 15-day GTU-guided internship focused on full-stack web development. Gained hands-on experience with HTML, CSS, JavaScript, Node.js, API integration, and basic React.js.
+</P>
+<p> Built mini-projects like a Tour Registration Form and Gmail-style login page, strengthening my practical understanding of frontend-backend integration and real-world web development workflows.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <h3>Languages</h3>
+    <div class="grid">
+      <div class="card">
+        <h3>Python</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="75"></div></div>
+      </div>
+      <div class="card">
+        <h3>SQL</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="75"></div></div>
+      </div>
+      <div class="card">
+        <h3>R</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="75"></div></div>
+      </div>
+    </div>
+    <h3>Tools & Platforms</h3>
+    <div class="grid">
+      <div class="card">
+        <h3>Microsoft-Excel</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="100"></div></div>
+      </div>
+      <div class="card">
+        <h3>Power BI</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="80"></div></div>
+      </div>
+      <div class="card">
+        <h3>Jupyter Notebooks</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="100"></div></div>
+      </div>
+      <div class="card">
+        <h3>R-Studio</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="75"></div></div>
+      </div>
+      <div class="card">
+        <h3>Tableau</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="50"></div></div>
+      </div>
+    </div>
+    <h3>Libraries & Frameworks</h3>
+    <div class="grid">
+      <div class="card">
+        <h3>Pandas</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+      <div class="card">
+        <h3>Matplotlib</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+      <div class="card">
+        <h3>Seaborn</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+      <div class="card">
+        <h3>Numpy</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+      <div class="card">
+        <h3>Scikit-learn</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="65"></div></div>
+      </div>
+    </div>
+    <h3>Soft Skills</h3>
+    <div class="grid">
+      <div class="card">
+        <h3>Communication</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+      <div class="card">
+        <h3>Time Management</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="90"></div></div>
+      </div>
+      <div class="card">
+        <h3>Problem Solving</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="80"></div></div>
+      </div>
+      <div class="card">
+        <h3>Attention to Detail</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="90"></div></div>
+      </div>
+      <div class="card">
+        <h3>Adaptability</h3>
+        <span class="skill-level-label"></span>
+        <div class="progress-bar"><div class="progress" data-progress="85"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="counter-value" data-target="20">+</div>
+        <div class="counter-label">Projects Completed</div>
+      </div>
+      <div class="card">
+        <div class="counter-value" data-target="6">+</div>
+        <div class="counter-label">Languages/Libraries Learned</div>
+      </div>
+      <div class="card">
+        <div class="counter-value" data-target="500">+</div>
+        <div class="counter-label">Hours of Data Analysis</div>
+      </div>
+      <div class="card">
+        <div class="counter-value" data-target="15">+</div>
+        <div class="counter-label">Certifications Earned</div>
+      </div>
+      <div class="card">
+        <div class="counter-value" data-target="2"></div>
+        <div class="counter-label">Internships Completed</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>SuperStore Dashboard In Excel</h3>
+        <p>This project demonstrates my ability to analyze and visualize sales data using advanced Excel features such as sparklines, pie charts, bar charts, line charts, column charts, and original raw data.</p>
+        <p><a href="https://github.com/vivekchn24/Superstore_Dashboard_Excel.git" class="icon-link"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+      </div>
+      <div class="card">
+        <h3>Telecom Customer Churn Retention Dashboard In Power-BI</h3>
+        <p>An in-depth dashboard that analyzes customer churn behavior in the telecom sector, split across churned and non-churned customers.</p>
+        <p><a href="https://github.com/vivekchn24/Telecom-Churn-Retention-Power-BI-Dashboard.git" class="icon-link"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+      </div>
+      <div class="card">
+        <h3>Lending Club Loan Data Analysis EDA Project</h3>
+        <p>This project involves a comprehensive Exploratory Data Analysis (EDA) on the LendingClub loan dataset using Python and Jupyter Notebook. The goal is to uncover insights about loan trends, borrower behavior, and key factors affecting loan defaults.</p>
+        <p><a href="https://github.com/vivekchn24/LendingClub-Loan-Data-Analysis-EDA-Project.git" class="icon-link"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+      </div>
+      <div class="card">
+        <h3>LinkedIn Job Postings Data Analysis EDA Project</h3>
+        <p>This project focuses on performing Exploratory Data Analysis (EDA) on job postings extracted from LinkedIn between 2023 and 2024, aiming to uncover trends in hiring practices, in-demand roles, and skill requirements across industries.</p>
+        <p><a href="https://github.com/vivekchn24/LinkedIn-Job-Postings-Data-Analysis-EDA-Project.git" class="icon-link"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+      </div>
+      <div class="card">
+        <h3>Walmart Sales Data Analysis SQL Project</h3>
+        <p>This project focuses on analyzing Walmart's retail sales data using SQL. It was developed and executed on a local WAMP server environment using phpMyAdmin.</p>
+        <p><a href="https://github.com/vivekchn24/Walmart-Sales-Data-Analysis-SQL-Project.git" class="icon-link"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+      </div>
+      <div class="card">
+        <h3>View More Projects on GitHub</h3>
+        <p>Here are a few of my featured projects. See more on GitHub.</p>
+        <p><a href="https://github.com/vivekchn24" class="icon-link"><i class="fas fa-external-link-alt"></i> View GitHub Profile For Projects</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+  <h2>Certifications</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>6 Months Course In Advanced Data Analysis From Future Vision Computer Institute With A+ Grade</h3>
+      <p><a href="#" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>Deloitte Certified Data Analytics Job Simulation On Forage</h3>
+      <p><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>Quantium Certified Data Analytics Job Simulation On Forage</h3>
+      <p><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>Tata Certified Data Visualisation : Empowering Business with Effective Insights Job Simulation On Forage</h3>
+      <p><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>Tata Certified GenAI Powered Data Analytics Job Simulation On Forage</h3>
+      <p><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>British Airways Certified Data Science Job Simulation On Forage</h3>
+      <p><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+    <div class="card">
+      <h3>Discover Data Analysis By Microsoft Learning</h3>
+      <p><a href="https://learn.microsoft.com/api/achievements/share/en-us/VivekChauhan-1894/8ZM3AYBW?sharingId=188F2AFD379F1E85" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+<div class="card">
+      <h3>Getting Started Building Power-BI By Microsoft Learning</h3>
+      <p><a href="https://learn.microsoft.com/api/achievements/share/en-us/VivekChauhan-1894/PLCQS9F4?sharingId=188F2AFD379F1E85" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+<div class="card">
+      <h3>Codechef Problem Solver Silver Badge</h3>
+      <p><a href="https://www.codechef.com/users/vivekchauhan24" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+<div class="card">
+      <h3>Cdechef Python Online Test & Quiz </h3>
+      <p><a href="https://www.codechef.com/skill-test/basic-python" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+<div class="card">
+      <h3>Problem Solver Bronze Streake Badge</h3>
+      <p><a href="https://www.codechef.com/users/vivekchauhan24" class="icon-link"><i class="fas fa-certificate"></i> View Certificate</a></p>
+    </div>
+<div class="card">
+      <h3>For More To CheckOut Linkedin Profile</h3>
+      <p><a href="https://www.linkedin.com/in/vivek-chauhan-a7a160258/" class="icon-link"><i class="fas fa-certificate"></i> CheckOut Linkedin Profile For Certificates</a></p>
+    </div>
+  </div>
+</section>
+
+  <section id="profiles">
+    <h2>Profiles</h2>
+    <div class="grid">
+      <div class="card"><a href="https://github.com/vivekchn24" class="icon-link"><i class="fab fa-github"></i> GitHub</a></div>
+      <div class="card"><a href="https://www.linkedin.com/in/vivek-chauhan-a7a160258/" class="icon-link"><i class="fab fa-linkedin"></i> LinkedIn</a></div>
+      <div class="card"><a href="https://www.codechef.com/users/vivekchauhan24" class="icon-link"><i class="fas fa-code"></i> CodeChef</a></div>
+      <div class="card"><a href="https://www.theforage.com/profile/TzX58oapHE2FzRNCx" class="icon-link"><i class="fas fa-graduation-cap"></i>Forage</a></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="grid">
+      <div class="card">
+        <p>I'm always open to discussing new opportunities, collaborations, or just sharing insights about data! Feel free to connect with me.</p>
+        <p><a href="https://www.linkedin.com/in/vivek-chauhan-a7a160258/" class="icon-link"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a></p>
+        <p><a href="Vivek_Chauhan_Data_Analyst_Resume_Linkedin.PDF" download class="icon-link"><i class="fas fa-download"></i> Download Resume</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Vivek Chauhan. All rights reserved.
+  </footer>
+
+  <script>
+    const titles = ["Data Analyst","Data Scientist","Business Intelligence Developer","GenAI Engineer","AI/ML Engineer", "Visual Storyteller", "Insight Generator", "Problem Solver"];
+    let current = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById("typing");
+
+    function type() {
+      const currentTitle = titles[current];
+      if (isDeleting) {
+        typingElement.textContent = currentTitle.substring(0, charIndex--);
+      } else {
+        typingElement.textContent = currentTitle.substring(0, charIndex++);
+      }
+
+      if (!isDeleting && charIndex === currentTitle.length + 1) {
+        isDeleting = true;
+        setTimeout(type, 1500);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        current = (current + 1) % titles.length;
+        setTimeout(type, 500);
+      } else {
+        setTimeout(type, isDeleting ? 75 : 120);
+      }
+    }
+
+    // Function to get skill level text
+    function getSkillLevel(progress) {
+        if (progress >= 85) {
+            return "Advanced";
+        } else if (progress >= 70) {
+            return "Intermediate";
+        } else {
+            return "Beginner";
+        }
+    }
+
+    // Function to animate skill bars
+    function animateSkillBars(section) {
+        const skillCards = section.querySelectorAll('#skills .card');
+        skillCards.forEach(card => {
+            const progressBar = card.querySelector('.progress');
+            const targetWidth = progressBar.dataset.progress;
+            progressBar.style.width = `${targetWidth}%`;
+
+            const skillLevelLabel = card.querySelector('.skill-level-label');
+            skillLevelLabel.textContent = getSkillLevel(parseInt(targetWidth));
+        });
+    }
+
+    // Function to animate counters
+    function animateCounter(entry) {
+      const counters = entry.target.querySelectorAll('.counter-value');
+      counters.forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const plusSign = counter.textContent.includes('+') ? '+' : ''; // Check if '+' is present
+        let count = 0;
+        const speed = 50; // Adjust speed as needed
+
+        const updateCount = () => {
+          if (count < target) {
+            count++;
+            counter.textContent = count + plusSign;
+            setTimeout(updateCount, speed);
+          } else {
+            counter.textContent = target + plusSign; // Ensure final value is exact
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // Array of sequential hover colors for cards (no longer used for h3, but kept for border/shadow)
+    const cardHoverColors = [
+      'var(--card-hover-1)',
+      'var(--card-hover-2)',
+      'var(--card-hover-3)',
+      'var(--card-hover-4)',
+      'var(--card-hover-5)',
+      'var(--card-hover-6)'
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      type(); // Start typing animation
+
+      // Intersection Observer for scroll animations and active nav links
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav ul li a');
+
+      const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.3 // Trigger when 30% of the section is visible
+      };
+
+      const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+
+            // Set active navigation link
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${entry.target.id}`) {
+                link.classList.add('active');
+              }
+            });
+
+            // Specific animations for sections
+            if (entry.target.id === 'skills') {
+              animateSkillBars(entry.target);
+            } else if (entry.target.id === 'achievements') {
+              animateCounter(entry);
+            }
+            // Uncomment the line below if you want animations to only run ONCE per section
+            // observer.unobserve(entry.target);
+          } else {
+            // Optional: Remove 'active' class when section leaves viewport
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${entry.target.id}`) {
+                    link.classList.remove('active');
+                }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+
+      // Card hover color effects
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        card.addEventListener('mouseenter', () => {
+          // Set custom property for card border/shadow animation
+          const hoverColor = cardHoverColors[index % cardHoverColors.length];
+          card.style.setProperty('--current-hover-color', hoverColor);
+
+          // Always set h3 to yellow on hover for ANY card
+          const h3Element = card.querySelector('h3');
+          if (h3Element) {
+              h3Element.style.color = 'var(--card-hover-1)'; // Yellow
+          }
+
+          // For skill cards, also change the skill level color to yellow
+          if (card.closest('#skills')) {
+            const skillLevelLabel = card.querySelector('.skill-level-label');
+            if (skillLevelLabel) {
+              skillLevelLabel.style.color = 'var(--card-hover-1)'; // Yellow
+            }
+          }
+
+          // For profiles/contact cards, make text and links yellow on hover
+          if (card.closest('#profiles') || card.closest('#contact')) {
+            card.querySelectorAll('p, a').forEach(el => {
+              // Only change color if it's not an icon link with its own primary color rule
+              if (!el.classList.contains('icon-link') || el.tagName === 'P') { // Check if it's a paragraph or a general link, not just an icon
+                el.style.color = 'var(--card-hover-1)'; // Yellow
+              } else if (el.classList.contains('icon-link')) { // Specifically target icon-links for profiles/contact
+                el.style.color = 'var(--card-hover-1)'; // Yellow
+              }
+            });
+          }
+
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.removeProperty('--current-hover-color'); // Clean up CSS variable for h3 border/shadow
+
+          // Revert h3 color
+          const h3Element = card.querySelector('h3');
+          if (h3Element) {
+              h3Element.style.color = ''; // Revert to default (secondary-color via CSS)
+          }
+
+          // For skill cards, revert the skill level color
+          if (card.closest('#skills')) {
+            const skillLevelLabel = card.querySelector('.skill-level-label');
+            if (skillLevelLabel) {
+              skillLevelLabel.style.color = 'var(--text-color)'; // Revert to white
+            }
+          }
+
+          // For profiles/contact cards, revert text and links to white
+          if (card.closest('#profiles') || card.closest('#contact')) {
+            card.querySelectorAll('p, a').forEach(el => {
+              if (!el.classList.contains('icon-link') || el.tagName === 'P') {
+                 el.style.color = 'var(--text-color)'; // Revert to white
+              } else if (el.classList.contains('icon-link')) {
+                 el.style.color = 'var(--text-color)'; // Revert icon links to white
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
